@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
-var chalk = require('chalk').default;
+const chalk = require('chalk').default;
 
-var currentNodeVersion = process.versions.node;
-var semer = currentNodeVersion.split('.');
-var major = semer[0];
+const currentNodeVersion = process.versions.node;
+const semer = currentNodeVersion.split('.');
+const major = semer[0];
 
-if (major>8){
+if (major<8){
   console.error(
     chalk.red(
       'You are running Node ' +
