@@ -25,6 +25,6 @@ console.log(
   )
 );
 
-require('./createApp')
+require('./createTemplate')
 
 

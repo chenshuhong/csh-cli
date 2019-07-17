@@ -16,7 +16,7 @@ import style from './RightPackagesListStyle.less'
 @inject('RightPackagesMgntListMod')
 @observer
 class RightPackagesListView extends React.Component{
-  
+
   // 构造函数，组件的实例创建时，最先执行
   constructor(props) {
     super(props);
@@ -24,24 +24,19 @@ class RightPackagesListView extends React.Component{
     this.stores = this.props.RightPackagesMgntListMod;
     this.state = {}
   }
-  
+
   // 已插入真实DOM
   componentDidMount() {
     this.stores.resetData();
     this.stores.getList();
   }
-  
+
   //查询列表
   queryConfig = [
     {
       elem_type: 'Input',
       zh_name: '权益包名称',
       en_name: 'rightPackageName',
-    },
-    {
-      elem_type: 'Input',
-      zh_name: '店铺范围',
-      en_name: 'area',
     },
     {
       elem_type: 'Select',
@@ -54,12 +49,12 @@ class RightPackagesListView extends React.Component{
       ]
     }
   ]
-  
+
   //状态
   statusMap = {
     '1': '启用', '2': '禁用',
   };
-  
+
   columns = [
     { title: '权益包编号', dataIndex: 'rightPackageCode' },
     { title: '权益包名称', dataIndex: 'rightPackageName' },
@@ -102,7 +97,7 @@ class RightPackagesListView extends React.Component{
       )
     },
   ]
-  
+
   //重置
   onReset = () => {
     this.stores.updateStore({
@@ -111,7 +106,7 @@ class RightPackagesListView extends React.Component{
     //请求页面
     this.stores.getList({ pageNum: 1 });
   }
-  
+
   //搜索
   onSearch = (filters) => {
     this.stores.updateStore({
@@ -120,7 +115,7 @@ class RightPackagesListView extends React.Component{
     //请求页面
     this.stores.getList({ pageNum: 1 });
   }
-  
+
   render(){
     const { tableData, loading } = this.stores.state;
     return (
@@ -130,7 +125,7 @@ class RightPackagesListView extends React.Component{
           onSearch={this.onSearch}
           onReset={this.onReset}
         />
-        <Card title="权益包列表">
+        <Card>
           <Grid
             data={{ columns: this.columns, ...tableData }}
             scroll={{ x: 'max-content' }}

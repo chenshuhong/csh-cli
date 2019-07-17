@@ -1,13 +1,11 @@
-
-import { action, observable, runInAction, useStrict } from 'mobx'
-import { cloneDeep } from 'lodash'
-// 引入Serv
-import Serv from './RightPackagesListServ';
-
 /**
  * @Author: 陈树鸿
  * @Date: 2019-07-17 19:11
  */
+import { action, observable, runInAction, useStrict } from 'mobx'
+import { cloneDeep } from 'lodash'
+import Serv from './RightPackagesListServ';
+
 // 严格模式
 useStrict(true);
 const state = {
@@ -24,7 +22,7 @@ const state = {
 class RightPackagesMgntListMod{
   // 监视状态
   @observable state = cloneDeep(state)
-  
+
   @action
   getList = async (payload) =>{
     //如果没有传页码则默认取state中的
@@ -58,13 +56,13 @@ class RightPackagesMgntListMod{
       })
     }
   }
-  
+
   //初始化数据
   @action
   resetData = () => {
     this.state = cloneDeep(state);
   }
-  
+
   //设置数据
   @action
   updateStore = (payload) => {
