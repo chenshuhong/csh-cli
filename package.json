@@ -1,0 +1,28 @@
+{
+  "name": "csh-cli",
+  "version": "0.0.1",
+  "description": "快速生成前端项目的脚手架工具",
+  "main": "src/index.js",
+  "bin": {
+    "csh-cli": "src/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chenshuhong/csh-cli.git"
+  },
+  "author": "shuhong.chen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chenshuhong/csh-cli/issues"
+  },
+  "homepage": "https://github.com/chenshuhong/csh-cli#readme",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "commander": "^2.20.0",
+    "envinfo": "^7.1.0",
+    "validate-npm-package-name": "^3.0.0"
+  }
+}
