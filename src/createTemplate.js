@@ -12,9 +12,16 @@ commander.parse(process.argv);
 if (commander.template){
   let templateName = commander.template
   const currentPath = process.cwd();
-  const fPath = path.resolve(currentPath, `${templateName}Style.less`);
-  console.log(fPath)
-  fs.copyFile('../template/style.less',fPath,function (err) {
-    console.log(err)
-  })
+  const stylePath = path.resolve(currentPath, `${templateName}Style.less`);
+  const servPath = path.resolve(currentPath, `${templateName}Serv.js`);
+  const viewPath = path.resolve(currentPath, `${templateName}View.js`);
+  const modPath = path.resolve(currentPath, `${templateName}Mod.js`);
+  const configPath = path.resolve(currentPath, `config.js`);
+  let config = require(configPath)
+  try{
+    fs.copyFileSync('../template/style.less',stylePath)
+    fs.copyFileSync('../template/serv.js',servPath)
+  }catch (e) {
+    console.log(e)
+  }
 }
