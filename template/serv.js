@@ -2,21 +2,16 @@ import config from 'config/Config'
 import request from 'utils/request'
 
 /**
- * @Author: 陈树鸿
- * @Date: 2019-07-17 19:37
- */
-
-/**
  * 列表
  * @param params
  * @returns {Promise<*>}
  */
 export async function getList(params) {
   return request({
-    url: 'memberRightPackages/page',
+    url: 'listUrl',
     method: 'GET',
     data: params,
-    app: config.icdpApp,
+    app: config.imkApp,
   })
 }
 
@@ -27,7 +22,7 @@ export async function getList(params) {
  */
 export async function changeStatus(params) {
   return request({
-    url: `memberRightPackages/update/${params.id}/status/${params.status}`,
+    url: `changeStatusUrl`,
     method: 'PUT',
     data: params,
     app: config.imkApp
@@ -39,9 +34,9 @@ export async function changeStatus(params) {
  * @param params
  * @returns {Promise<*>}
  */
-export async function deletePackages(params){
+export async function deleteListItem(params){
   return request({
-    url: `memberRightPackages/delete/${params.id}`,
+    url: `deleteUrl`,
     method: 'DELETE',
     data: params,
     app: config.imkApp

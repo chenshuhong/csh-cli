@@ -1,9 +1,0 @@
-const commander = require('commander')
-
-commander
-  .option('-t, --template <name>', 'gennerate template file');
-commander.parse(process.argv);
-
-if (commander.template){
-  console.log(commander.template)
-}
