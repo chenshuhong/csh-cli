@@ -1,4 +1,6 @@
 const commander = require('commander')
+const chalk = require('chalk').default;
+const ejs = require('ejs');
 const packageJson = require('../package.json');
 const fs=require('fs');//引入fs模块
 const path = require('path')
@@ -17,11 +19,23 @@ if (commander.template){
   const viewPath = path.resolve(currentPath, `${templateName}View.js`);
   const modPath = path.resolve(currentPath, `${templateName}Mod.js`);
   const configPath = path.resolve(currentPath, `config.js`);
-  let config = require(configPath)
+  let {serv} = require(configPath)
+  let log = console.log
   try{
+    log(chalk.green('copy style.less start'))
     fs.copyFileSync('../template/style.less',stylePath)
-    fs.copyFileSync('../template/serv.js',servPath)
+    log(chalk.green('copy style.less success'))
+    chalk.green('read serv.js start')
+    let servEjs = fs.readFileSync('../template/serv.ejs').toString()
+    log(chalk.green('read serv.js success,write *Serv.js start'))
+    const servData = {
+      listUrl:serv.list.url,
+      changeStatusUrl:serv.changeStatus.url,
+      deleteUrl:serv.del.url
+    }
+    fs.writeFileSync(servPath,ejs.render(servEjs,servData))
+    log(chalk.green('write *Serv.js success'))
   }catch (e) {
-    console.log(e)
+    log(chalk.red('error occur',e))
   }
 }
