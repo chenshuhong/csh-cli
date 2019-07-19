@@ -3,6 +3,9 @@
  * @Date: 2019-07-18 17:55
  */
 module.exports = {
+  //两种模板，1是列表，2是编辑
+  type:'list',
+  //接口文件配置，一般来说需要列表，修改状态，删除这三个接口
   serv:{
     list:{
       url:'baiye/list'
@@ -14,6 +17,7 @@ module.exports = {
       url:'baiye/delete'
     }
   },
+  //视图界面，需要查询配置，table配置，table右侧操作按钮，是否展示多选按钮，表格右上按钮列表
   view:{
     queryConfig:[
       {
@@ -51,6 +55,7 @@ module.exports = {
       {label:'批量删除'},
     ]
   },
+  //模型,暂无需要特殊配置的地方
   mod:{
   
   }

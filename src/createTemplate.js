@@ -11,6 +11,7 @@ commander
   .option('-t, --template <name>', 'gennerate template file');
 commander.parse(process.argv);
 
+
 if (commander.template){
   let templateName = commander.template
   const currentPath = process.cwd();
@@ -19,17 +20,31 @@ if (commander.template){
   const viewPath = path.resolve(currentPath, `${templateName}View.js`);
   const modPath = path.resolve(currentPath, `${templateName}Mod.js`);
   const configPath = path.resolve(currentPath, `config.js`);
-  let {serv,view,mod} = require(configPath)
+  let stats = fs.statSync(configPath)
+  if (stats.isFile()){
+    let {type,serv,view,mod} = require(configPath)
+    if (type === 'list'){
+      generateListFiles(templateName,stylePath,servPath,viewPath,modPath,serv,view,mod)
+    }else {
+      generateBaseFiles(templateName,stylePath,servPath,viewPath,modPath,serv,view,mod)
+    }
+  } else {
+  
+  }
+  
+}
+
+function generateListFiles(templateName,stylePath, servPath, viewPath, modPath, serv,view, mod) {
   let log = console.log
   try{
     //复制style.less
     log(chalk.green('copy style.less start'))
-    fs.copyFileSync('../template/style.less',stylePath)
+    fs.copyFileSync('../template/list/style.less',stylePath)
     log(chalk.green(`copy style.less to ${templateName}Style.less success`))
     
     //复制及修改serv.js文件
     chalk.green('read serv.js start')
-    let servFileString = fs.readFileSync('../template/serv.js').toString()
+    let servFileString = fs.readFileSync('../template/list/serv.js').toString()
     log(chalk.green(`read serv.js success,write ${templateName}Serv.js start`))
     const servData = {
       listUrl:serv.list.url,
@@ -38,10 +53,10 @@ if (commander.template){
     }
     fs.writeFileSync(servPath,ejs.render(servFileString,servData))
     log(chalk.green(`write ${templateName}Serv.js success`))
-  
+    
     //复制及修改view.js文件
     chalk.green('read view.js start')
-    let viewFileString = fs.readFileSync('../template/view.ejs').toString()
+    let viewFileString = fs.readFileSync('../template/list/view.ejs').toString()
     log(chalk.green(`read view.js success,write ${templateName}View.js start`))
     const viewData = {
       name:templateName,
@@ -49,10 +64,10 @@ if (commander.template){
     }
     fs.writeFileSync(viewPath,ejs.render(viewFileString,viewData))
     log(chalk.green(`write ${templateName}View.js success`))
-  
+    
     //mob.js文件
     chalk.green('read mod.js start')
-    let modFileString = fs.readFileSync('../template/mod.js').toString()
+    let modFileString = fs.readFileSync('../template/list/mod.js').toString()
     log(chalk.green(`read mod.js success,write ${templateName}Mod.js start`))
     const modData = {
       name:templateName,
@@ -63,4 +78,8 @@ if (commander.template){
   }catch (e) {
     log(chalk.red('error occur',e))
   }
+}
+
+function generateBaseFiles(templateName,stylePath, servPath, viewPath, modPath, serv,view, mod) {
+
 }
