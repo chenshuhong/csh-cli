@@ -25,10 +25,14 @@ module.exports = {
         en_name: 'rightPackageName',
       },
       {
-        elem_type: 'Input',
         zh_name: '店铺范围',
         en_name: 'area',
       },
+      {
+        elem_type: 'Select',
+        zh_name: '权益状态',
+        en_name: 'status',
+      }
     ],
     columns:[
       { title: '权益包编号', dataIndex: 'rightPackageCode' },
@@ -45,7 +49,7 @@ module.exports = {
       {label:'查看'},
       {label:'屏蔽'},
       {label:'编辑'},
-      {label:'删除',isConfirm:true,confirmTitle:'是否确定删除'},
+      {label:'删除',confirmTitle:'是否确定删除'},
     ],
     showRowSelection:true,
     gridBtn:[
