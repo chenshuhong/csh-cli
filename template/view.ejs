@@ -1,0 +1,128 @@
+import React from 'react'
+import { Button, Card, Form } from 'antd'
+import Page from 'widget/Page/Page'
+import Query from 'widget/Query'
+import Grid from 'widget/Grid/GridView'
+import { get } from 'lodash'
+import AuthBtns from 'widget/AuthBtns'
+import { inject, observer } from 'mobx-react'
+import styles from './<%= name %>Style.less'
+
+// 在视图注入module层数据
+@inject('<%= name %>')
+@observer
+class View extends React.Component{
+
+  // 构造函数，组件的实例创建时，最先执行
+  constructor(props) {
+    super(props);
+    // 注入的Mod
+    this.stores = this.props.<%= name %>Mod
+    this.state = {}
+  }
+
+  // 已插入真实DOM
+  componentDidMount() {
+    this.stores.resetData();
+    this.stores.getList();
+  }
+
+  //查询列表
+  queryConfig = [
+    <% queryConfig.forEach(function(query){ -%>
+    {
+      elem_type: '<%= query.elem_type||'Input' %>',
+      zh_name: '<%= query.zh_name %>',
+      en_name: '<%= query.en_name %>',
+    },
+    <% }); -%>
+  ]
+
+  columns = [
+    <% columns.forEach(function(column){ -%>
+    {
+      title:'<%= column.title %>',
+      dataIndex:'<%= column.dataIndex %>',
+      <% if (column.width){ -%>width:'<%= column.width %>',<% } -%>
+      <% if (column.fixed){ -%>fixed:'<%= column.fixed %>',<% } -%>
+      <% if (column.dataIndex === 'operation'){ -%>
+      render: (text, record) => (
+        <AuthBtns
+          record={record}
+          isCutLine
+          action={[
+          <% operationBtns.forEach(function(btn){ -%>
+          {
+            label:'<%= btn.label %>',
+            click:() => {
+              console.log('点击了<%= btn.label %>')
+            },
+          },
+          <% }) -%>
+          ]}/>)
+      <% } -%>
+    },
+    <% }) -%>
+  ]
+
+
+  //重置
+  onReset = () => {
+    this.stores.updateStore({
+      filters: {}
+    });
+    //请求页面
+    this.stores.getList({ pageNum: 1 });
+  }
+
+  //搜索
+  onSearch = (filters) => {
+    this.stores.updateStore({
+      filters: filters
+    });
+    //请求页面
+    this.stores.getList({ pageNum: 1 });
+  }
+
+  render(){
+    const { tableData, loading,selectedRowKeys } = this.stores.state;
+    return (
+      <Page>
+        <Query
+          queryConfig={this.queryConfig}
+          onSearch={this.onSearch}
+          onReset={this.onReset}
+        />
+        <Card extra={(
+          <div className={styles.btnGroup}>
+          <% gridBtn.forEach(function(btn){ -%>
+          <Button type="primary" onClick={()=>{console.log('<%= btn.label %>')}}><%= btn.label %></Button>
+          <% }) -%>
+          </div>
+        )}>
+          <Grid
+            data={{ columns: this.columns, ...tableData }}
+            scroll={{ x: 'max-content' }}
+            pageChange={(pageNum, pageSize) => {
+              this.stores.getList({ pageNum, pageSize })
+            }}
+            isDisplayOrder={true}
+            loading={loading}
+            <% if(showRowSelection){ -%>
+            rowSelection={{
+              selectedRowKeys,
+              onChange:(selectedRowKeys, selectedRows)=>{
+                this.stores.updateStore({
+                  selectedRowKeys
+                })
+              }
+            }}
+            <% } -%>
+          />
+        </Card>
+      </Page>
+    )
+  }
+}
+
+export default Form.create()(View)
