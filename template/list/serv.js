@@ -8,7 +8,7 @@ import request from 'utils/request'
  */
 export async function getList(params) {
   return request({
-    url: '<%= listUrl %>',
+    url: '<%= listUrl||"baiye/list" %>',
     method: 'GET',
     data: params,
     app: config.imkApp,
@@ -22,7 +22,7 @@ export async function getList(params) {
  */
 export async function changeStatus(params) {
   return request({
-    url: '<%= changeStatusUrl %>',
+    url: '<%= changeStatusUrl||"baiye/changeStatus" %>',
     method: 'PUT',
     data: params,
     app: config.imkApp
@@ -36,7 +36,7 @@ export async function changeStatus(params) {
  */
 export async function deleteListItem(params){
   return request({
-    url: '<%= deleteUrl %>',
+    url: '<%= deleteUrl||"baiye/deleteListItem" %>',
     method: 'DELETE',
     data: params,
     app: config.imkApp
