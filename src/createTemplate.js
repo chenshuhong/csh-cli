@@ -19,7 +19,7 @@ if (commander.template){
   const viewPath = path.resolve(currentPath, `${templateName}View.js`);
   const modPath = path.resolve(currentPath, `${templateName}Mod.js`);
   const configPath = path.resolve(currentPath, `config.js`);
-  let {serv,view} = require(configPath)
+  let {serv,view,mod} = require(configPath)
   let log = console.log
   try{
     //复制style.less
@@ -49,6 +49,17 @@ if (commander.template){
     }
     fs.writeFileSync(viewPath,ejs.render(viewFileString,viewData))
     log(chalk.green(`write ${templateName}View.js success`))
+  
+    //mob.js文件
+    chalk.green('read mod.js start')
+    let modFileString = fs.readFileSync('../template/mod.js').toString()
+    log(chalk.green(`read mod.js success,write ${templateName}Mod.js start`))
+    const modData = {
+      name:templateName,
+      ...mod
+    }
+    fs.writeFileSync(modPath,ejs.render(modFileString,modData))
+    log(chalk.green(`write ${templateName}Mod.js success`))
   }catch (e) {
     log(chalk.red('error occur',e))
   }

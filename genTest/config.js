@@ -50,5 +50,8 @@ module.exports = {
       {label:'批量屏蔽'},
       {label:'批量删除'},
     ]
+  },
+  mod:{
+  
   }
 }

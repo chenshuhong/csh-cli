@@ -9,9 +9,9 @@ import { inject, observer } from 'mobx-react'
 import styles from './<%= name %>Style.less'
 
 // 在视图注入module层数据
-@inject('<%= name %>')
+@inject('<%= name %>Mod')
 @observer
-class View extends React.Component{
+class <%= name %>View extends React.Component{
 
   // 构造函数，组件的实例创建时，最先执行
   constructor(props) {

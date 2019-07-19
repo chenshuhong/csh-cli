@@ -1,13 +1,9 @@
 import { action, observable, runInAction, useStrict } from 'mobx'
 import { cloneDeep } from 'lodash'
 // 引入Serv
-import {getList,changeStatus,deletePackages} from './RightPackagesListServ';
+import {getList,changeStatus,deleteListItem} from './<%= name %>Serv';
 import { message } from 'antd'
 
-/**
- * @Author: 陈树鸿
- * @Date: 2019-07-17 19:11
- */
 // 严格模式
 useStrict(true);
 const state = {
@@ -22,7 +18,7 @@ const state = {
   loading: false
 }
 
-class RightPackagesMgntListMod{
+class <%= name %>Mod{
   // 监视状态
   @observable state = cloneDeep(state)
   
@@ -94,9 +90,9 @@ class RightPackagesMgntListMod{
   }
   
   @action
-  deletePackages = async (payload) =>{
+  deleteListItem = async (payload) =>{
     let { selectedRowKeys } = this.state;
-    let { resultCode, data } = await deletePackages({
+    let { resultCode, data } = await deleteListItem({
       id: payload.id ? payload.id : selectedRowKeys.join(',')
     })
     runInAction(()=>{
@@ -109,5 +105,5 @@ class RightPackagesMgntListMod{
   }
 }
 
-const rightPackagesListMod = new RightPackagesMgntListMod()
-export default rightPackagesListMod;
+const mod = new <%= name %>Mod()
+export default mod;
